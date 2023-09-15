@@ -11,8 +11,9 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostById(@Param('id') id: number) {
-    const post = this.postsService.getPostById(id);
+  getPostById(@Param('id') id: string) {
+    const post = this.postsService.getPostById(String(id));
+
     if (!post) {
       throw new NotFoundException('Post not found');
     }

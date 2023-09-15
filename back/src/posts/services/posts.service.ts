@@ -9,7 +9,7 @@ export class PostsService {
     return this.postsRepository.findAll();
   }
 
-  getPostById(id: number) {
-    return this.postsRepository.findOne(id);
+  getPostById(id: string) {
+    return this.postsRepository.findOne(+id);
   }
 }

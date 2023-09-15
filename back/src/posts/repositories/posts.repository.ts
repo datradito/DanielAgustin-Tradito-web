@@ -10,6 +10,7 @@ export class PostsRepository {
   }
 
   findOne(id: number) {
-    return this.posts.find((post) => post.id === id);
+    const post = this.posts.find((post) => post.id === id);
+    return post;
   }
 }
