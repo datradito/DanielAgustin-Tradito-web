@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className=" justify-center p-6">
           <Link href="/">
-            <Button className="rounded px-4 py-2 text-white">Back</Button>
+            <Button className="btn-text-color rounded px-4 py-2">Back</Button>
           </Link>
         </div>
       </div>
