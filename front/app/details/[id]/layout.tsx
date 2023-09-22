@@ -9,8 +9,9 @@ export default function DetailsLayout({
   return (
     <section>
       {/* Include shared UI here e.g. a header or sidebar */}
-      <nav></nav>
+
       <Suspense fallback={<Loading />}>{children}</Suspense>
+
       {/* Include shared UI here e.g. a footer */}
     </section>
   );

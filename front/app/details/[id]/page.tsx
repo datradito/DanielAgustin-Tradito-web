@@ -1,3 +1,9 @@
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+
+import Link from "next/link";
+
 async function getPost(id: string) {
   const res = await fetch(`https://scalio-backend.vercel.app/posts/${id}`);
   if (!res.ok) {
@@ -10,9 +16,30 @@ async function getPost(id: string) {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await getPost(params.id);
+  if (!post.title || !post.body) {
+    // Redirect to Home with an error message
+    window.location.href = `/?error=${params.id}`;
+    return null;
+  }
+
   return (
-    <div>
-      Details: <span>{post.body}</span>
-    </div>
+    <>
+      <div className="grid grid-cols-1 grid-rows-3">
+        <div>
+          <Label className="p-4 text-2xl font-bold">Title</Label>
+
+          <h3 className="p-4">{post.title}</h3>
+          <Label className="p-4 text-2xl font-bold">Body</Label>
+          <Textarea className="h-32 w-1/3 p-4" readOnly>
+            {post.body}
+          </Textarea>
+        </div>
+        <div className=" justify-center p-6">
+          <Link href="/">
+            <Button className="rounded px-4 py-2 text-white">Back</Button>
+          </Link>
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,8 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import ThemeProvider from "@/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
+
+import ThemeProvider from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Scalio Next App",

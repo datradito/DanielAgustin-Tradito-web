@@ -1,34 +1,55 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@radix-ui/themes";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
+import Logo from "@/assets/logo-white.svg";
 
 function Home() {
-  const router = useRouter();
-  const [id, setId] = useState(0);
+  const [id, setId] = useState("");
+  const searchParams = useSearchParams();
+
+  const error = searchParams.get("error");
+  console.log("error", error);
 
   return (
-    <>
-      <div className="flex items-center space-x-2">
-        <Label>Search ID:</Label>
-        <Input
-          type="number"
-          placeholder="Enter ID"
-          value={id}
-          onChange={(e) => setId(parseInt(e.target.value, 10))}
-        />
-        <Button
-          onClick={() => {
-            router.push(`/details/${id}`);
-          }}
-        >
-          SEND
-        </Button>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 font-montserrat">
+      <header className="fixed top-0 z-50 flex w-full items-center space-x-4 bg-white p-4 shadow-md">
+        <Image src={Logo} alt="Scalio Logo" width={50} height={50} />
+        <h1 className="text-2xl font-bold">Scalio Challenge</h1>
+      </header>
+
+      <div className="mt-24 grid grid-cols-1 grid-rows-5">
+        <div className="mt-4 w-80 rounded bg-white pb-12 shadow-md">
+          <h2 className="mb-4 p-2 text-xl font-bold">Search Post</h2>
+          <Input
+            className="mb-4 w-full appearance-none"
+            type="number"
+            placeholder="Enter ID"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            style={{
+              MozAppearance: "textfield",
+            }}
+          />
+          <div className="flex justify-center">
+            <Link href={`/details/${id}`}>
+              <Button className="rounded px-4 py-2 text-white">Send</Button>
+            </Link>
+          </div>
+          {!!error && (
+            <div className="mt-4 text-red-500">
+              <p>Error: {error}</p>
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
