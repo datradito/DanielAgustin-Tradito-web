@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 async function getPost(id: string) {
-  const res = await fetch(`https://scalio-backend.vercel.app/posts/${id}`);
+  const apiUrl = process.env.API_POSTS;
+  const res = await fetch(`${apiUrl}/${id}`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
