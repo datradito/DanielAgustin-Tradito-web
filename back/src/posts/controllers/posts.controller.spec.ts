@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PostsController } from './posts.controller';
 import { PostsService } from '../services/posts.service';
 import { PostsRepository } from '../repositories/posts.repository';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 describe('PostsController', () => {
   let controller: PostsController;
@@ -10,7 +12,14 @@ describe('PostsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PostsController],
-      providers: [PostsService, PostsRepository],
+      providers: [
+        PostsService,
+        PostsRepository,
+        {
+          provide: WINSTON_MODULE_PROVIDER,
+          useValue: Logger.prototype,
+        },
+      ],
     }).compile();
 
     controller = module.get<PostsController>(PostsController);

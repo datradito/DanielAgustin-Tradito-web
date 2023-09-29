@@ -1,14 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostsService } from './posts.service';
 import { PostsRepository } from '../repositories/posts.repository';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 describe('PostsService', () => {
   let service: PostsService;
   let repository: PostsRepository;
 
   beforeEach(async () => {
+    const mockLogger = {
+      info: jest.fn(),
+      error: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PostsService, PostsRepository],
+      providers: [
+        PostsService,
+        PostsRepository,
+        {
+          provide: WINSTON_MODULE_PROVIDER,
+          useValue: mockLogger,
+        },
+      ],
     }).compile();
 
     service = module.get<PostsService>(PostsService);
