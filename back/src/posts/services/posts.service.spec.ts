@@ -19,11 +19,13 @@ describe('PostsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all posts', () => {
+  it('should return paginated posts', () => {
     const result = [{ userId: 1, id: 1, title: 'Test', body: 'Test body' }];
+    const limit = 10;
+    const offset = 0;
     jest.spyOn(repository, 'findAll').mockImplementation(() => result);
 
-    expect(service.getPosts()).toBe(result);
+    expect(service.getPosts(limit, offset)).toBe(result);
   });
 
   it('should return a post by ID', () => {

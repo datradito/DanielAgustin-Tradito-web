@@ -16,10 +16,12 @@ describe('PostsRepository', () => {
     expect(repository).toBeDefined();
   });
 
-  it('should return all posts', () => {
-    const posts = repository.findAll();
+  it('should return paginated posts', () => {
+    const limit = 10;
+    const offset = 0;
+    const posts = repository.findAll(limit, offset);
     expect(posts).toBeDefined();
-    expect(posts.length).toBeGreaterThan(0);
+    expect(posts.length).toBeLessThanOrEqual(limit);
   });
 
   it('should return a post by ID', () => {

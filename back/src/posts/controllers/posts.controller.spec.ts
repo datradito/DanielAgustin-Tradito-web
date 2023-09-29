@@ -21,10 +21,12 @@ describe('PostsController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return posts', () => {
+  it('should return posts with pagination', () => {
     const result = [{ userId: 1, id: 1, title: 'Test', body: 'Test body' }];
+    const limit = 10;
+    const offset = 0;
     jest.spyOn(service, 'getPosts').mockImplementation(() => result);
 
-    expect(controller.getPosts()).toBe(result);
+    expect(controller.getPosts(limit, offset)).toBe(result);
   });
 });
