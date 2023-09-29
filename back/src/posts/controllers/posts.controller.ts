@@ -1,4 +1,10 @@
-import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  NotFoundException,
+  Query,
+} from '@nestjs/common';
 import { PostsService } from '../services/posts.service';
 
 @Controller('posts')
@@ -6,8 +12,8 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  getPosts() {
-    return this.postsService.getPosts();
+  getPosts(@Query('limit') limit: number, @Query('offset') offset: number) {
+    return this.postsService.getPosts(limit, offset);
   }
 
   @Get(':id')

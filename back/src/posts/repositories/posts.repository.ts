@@ -5,8 +5,8 @@ import postsData from '../../../db/posts.json';
 export class PostsRepository {
   private posts = postsData;
 
-  findAll() {
-    return this.posts;
+  findAll(limit: number, offset: number) {
+    return this.posts.slice(offset, offset + limit);
   }
 
   findOne(id: number) {
