@@ -58,16 +58,76 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+# NestJS Backend Project
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This project is a NestJS backend application with enhanced features for better maintainability and scalability.
 
-## Stay in touch
+## Table of Contents
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. [Environment Configuration](#environment-configuration)
+2. [Logging](#logging)
+3. [Pagination in GET All](#pagination-in-get-all)
 
-## License
+---
 
-Nest is [MIT licensed](LICENSE).
+## 1. Environment Configuration
+
+### Description
+
+We use `.env` files for environment variables. The `ConfigModule` is used to load these variables and make them globally accessible.
+
+### How to Use
+
+1. Create a `.env` file at the root of the `back` folder.
+2. Add your environment variables, e.g., `PORT=3001`.
+3. Use `ConfigService` to read these variables in your code.
+
+```typescript
+const port = configService.get<number>('PORT') || 3001;
+```
+
+---
+
+## 2. Logging
+
+### Description
+
+We use `Winston` for logging. It is configured in a separate `logger.config.ts` file and can be injected anywhere in the application.
+
+### How to Use
+
+1. Install `winston` and `nest-winston` packages.
+2. Create a `logger.config.ts` in the `config` folder.
+3. Import this configuration in your `app.module.ts`.
+
+    ```typescript
+    import { winstonConfig } from './config/logger.config';
+    ```
+
+4. Inject `WINSTON_MODULE_PROVIDER` to use logging.
+
+    ```typescript
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
+    ```
+
+---
+
+## 3. Pagination in GET All
+
+### Description
+
+The `GET /posts` endpoint now supports pagination. You can specify `limit` and `offset` query parameters to paginate the results.
+
+### How to Use
+
+1. Update the `findAll` method in `posts.repository.ts` to accept `limit` and `offset`.
+2. Update `getPosts` in `posts.service.ts` and `posts.controller.ts` to use these parameters.
+
+    ```typescript
+    @Get()
+    getPosts(@Query('limit') limit: number, @Query('offset') offset: number) {
+      return this.postsService.getPosts(limit, offset);
+    }
+    ```
+
+---
